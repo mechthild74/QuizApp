@@ -9,10 +9,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    
  
 </head>
-<body>
+<body onload="init()">
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
           <span class="navbar-brand mb-0 h1">QuizApp</span>
@@ -23,35 +23,35 @@
         <div class="card quiz-card">
             <img src="./assets/img/pencil.jpg" class="card-img-top" alt="Pencil Bild">
             <div class="card-body">
-                <h5 class="card-title">Frage</h5>
+                <h5 id="questiontext" class="card-title">Frage</h5>
 
                 <div class="card">
-                    <div class="card-body mb-2">
+                    <div id="answer1" class="card-body mb-2">
                     Antowort 1
                     </div>
                 </div>
 
                 <div class="card mb-2">
-                    <div class="card-body">
+                    <div id="answer2" class="card-body">
                     Antowort 2
                     </div>
                 </div>
 
 
                 <div class="card mb-2">
-                    <div class="card-body">
+                    <div id="answer3" class="card-body">
                     Antowort 3
                     </div>
                 </div>
 
                 <div class="card mb-2">
-                    <div class="card-body">
+                    <div id="answer4" class="card-body">
                     Antowort 4
                     </div>
                 </div>
 
-                <div class="question-footer">
-                    <span><b>1</b> von <b>5</b> Fragen</span>
+                <div id="correct-answer" class="question-footer">
+                    <span><b>1</b> von <b id="all-questions"></b> Fragen</span>
                     <button class="btn btn-primary">Nächste Frage</button>
                 </div>
 
