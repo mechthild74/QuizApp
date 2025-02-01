@@ -20,3 +20,30 @@ body {
     align-items: center;
     padding-top: 16px;
 }
+
+.quiz-answer-card:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.bg-success, .bg-danger {
+    color: white;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.final_text {
+    font-size: 38px;
+    margin-bottom: 32px;
+}
+
+.restart-btn {
+    display: flex;
+    justify-content: center;
+}

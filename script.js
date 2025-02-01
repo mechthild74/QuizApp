@@ -50,6 +50,11 @@ let questions = [
 ];
 
 let currentQuestion = 0;
+let correctQuestion = 0;
+let progressValue= 0;
+let question;
+let audioSuccess = new Audio("./assets/sound/success.mp3");
+let audioFail = new Audio("./assets/sound/fail.mp3");
 
 function init() {
     document.getElementById("all-questions").innerHTML = questions.length;
@@ -57,11 +62,90 @@ function init() {
 }
 
 function showQuestion() {
+    
+    if (gameIsOver()) {
+        showEndScreen()
+    }
+    else {
+        updateNextQuestion();
+    }
+    calculateProgress()
+}
+
+function gameIsOver(){
+    return currentQuestion >= questions.length;
+}
+
+function showEndScreen(){
+    document.getElementById("question-body").style.display='none';
+    document.getElementById("end-screen").style.display='';
+    document.getElementById("end-screen-all-question").innerHTML = questions.length;
+    document.getElementById("end-screen-correct-question").innerHTML = correctQuestion;
+    document.getElementById("header-image").src = "./assets/img/trophy_new.png";
+}
+
+function updateNextQuestion() {
     let question = questions[currentQuestion];
-    console.log(question)
     document.getElementById("questiontext").innerHTML = question["question"];
-    document.getElementById("answer1").innerHTML = question["answer_1"];
-    document.getElementById("answer2").innerHTML = question["answer_2"];
-    document.getElementById("answer3").innerHTML = question["answer_3"];
-    document.getElementById("answer4").innerHTML = question["answer_4"];
+    document.getElementById("answer_1").innerHTML = question["answer_1"];
+    document.getElementById("answer_2").innerHTML = question["answer_2"];
+    document.getElementById("answer_3").innerHTML = question["answer_3"];
+    document.getElementById("answer_4").innerHTML = question["answer_4"];
+    document.getElementById("current-question").innerHTML = currentQuestion + 1;
+}
+
+function answer(selection) {
+    question= questions[currentQuestion];
+    let selectedQuestionNumber = selection.slice(-1);
+    let idOFRightAnswer = `answer_${question['right_answer']}`;
+
+    if (rightAnswerSelected(selectedQuestionNumber)) {
+        document.getElementById(selection).parentNode.classList.add('bg-success');
+        correctQuestion++;
+        audioSuccess.play();
+    } 
+    else{
+        document.getElementById(selection).parentNode.classList.add('bg-danger');
+        document.getElementById(idOFRightAnswer).parentNode.classList.add('bg-success');
+        audioFail.play();
+    }
+    document.getElementById('next-btn').disabled = false;
+}
+
+function rightAnswerSelected(selectedQuestionNumber){
+    return selectedQuestionNumber == question['right_answer'];
+}
+
+function nextQuestion() {
+    currentQuestion ++;
+    document.getElementById('next-btn').disabled = true;
+    showQuestion();
+    resetAnswerBtn();
+}
+
+function resetAnswerBtn() {
+    document.getElementById("answer_1").parentNode.classList.remove('bg-danger');
+    document.getElementById("answer_1").parentNode.classList.remove('bg-success');
+    document.getElementById("answer_2").parentNode.classList.remove('bg-danger');
+    document.getElementById("answer_2").parentNode.classList.remove('bg-success');
+    document.getElementById("answer_3").parentNode.classList.remove('bg-danger');
+    document.getElementById("answer_3").parentNode.classList.remove('bg-success');
+    document.getElementById("answer_4").parentNode.classList.remove('bg-danger');
+    document.getElementById("answer_4").parentNode.classList.remove('bg-success');
+}
+
+function calculateProgress() {
+    progressValue = Math.round((currentQuestion) / questions.length * 100);
+    document.getElementById("progress-bar").innerHTML = `${progressValue} %`;
+    document.getElementById("progress-bar").style = `width: ${progressValue}%`;
+}
+
+function restartGame() {
+    currentQuestion = 0;
+    correctQuestion = 0;
+    progressValue= 0;
+    document.getElementById("header-image").src = "./assets/img/pencil.jpg";
+    init();
+    document.getElementById("question-body").style.display='';
+    document.getElementById("end-screen").style.display='none';
 }
